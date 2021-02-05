@@ -9,15 +9,13 @@
 </template>
 
 <script>
-import SmartGoal from '@/components/SmartGoalForm.vue'
-
 export default {
   name: 'action-button',
   props: ['textOne', 'textTwo'],
   methods: {
       updateGoals: function(event) {
           if (event) event.preventDefault();
-          this.$router.push({ path: 'smart-goal', component: SmartGoal})
+          this.$router.push({ path: 'goal'})
       }
   }
 }
