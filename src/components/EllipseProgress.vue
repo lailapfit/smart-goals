@@ -1,13 +1,10 @@
 <template>
     <div class="ellipse-progress">
-        <vue-ellipse-progress
-          :data="circles"                    
-          :progress="progress"
+        <vue-ellipse-progress                 
+          :progress="Number(progressData)"
           :angle="-90"
           :color="colorLine"
-          :colorFill="colorFillGradient"
-          :emptyColor="emptyColorLine"
-          :emptyColorFill="emptyColorFillGradient"                      
+          :emptyColor="emptyColorLine"                  
           :size="300"
           :thickness="10"
           emptyThickness="7%"
@@ -34,7 +31,7 @@
 <script>
 export default {
   name: 'ellipse-progress',
-  props: [ 'progress', 'colorLine', 'emptyColorLine', 'legendValue', 'legendValueSlot', 'legendCaption']
+  props: [ 'progressData', 'colorLine', 'emptyColorLine', 'legendValue', 'legendValueSlot', 'legendCaption'],
 }
 </script>
 
