@@ -17,4 +17,7 @@
   color: #2c3e50;
   margin-top: 60px;
 }
+.padding-top-sm {
+  padding-top: 10px;
+}
 </style>
