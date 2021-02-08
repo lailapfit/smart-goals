@@ -13,8 +13,6 @@ export default {
         formio: Form
     },
     data: function() {
-        console.log('in data')
-    // Load these from vuex or some other state store system.
     return {
       formUrl: "https://dqyymsublasmimb.form.io/smartgoals"
     }
