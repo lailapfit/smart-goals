@@ -46,14 +46,11 @@ export default {
 .goals .goal .card:hover {
     transform: scale(1.05);
 }
-.goals .goal .card-group {
+.goals .card-deck {
     justify-content: center;
 }
 .goals .goal .card-title {
     border-bottom: 1px solid black;
     padding-bottom: 0.5rem;
-}
-.goals .goal ol {
-    text-align: justify;
 }
 </style>

@@ -20,4 +20,7 @@
 .padding-top-sm {
   padding-top: 10px;
 }
+ol {
+    text-align: initial;
+}
 </style>
