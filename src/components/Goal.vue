@@ -14,7 +14,6 @@
                 </template>
             </b-table>
             <b-pagination v-model="currentPage" :total-rows="rows" :per-page="perPage" aria-controls="goals-table" align="center"></b-pagination>
-            <p class="mt-3">Current Page: {{ currentPage }}</p>
         </div>
     </div>
 </template>
