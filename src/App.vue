@@ -26,7 +26,4 @@ ol {
 #goals-table thead {
     background-color:  #66C89C;
 }
-#goals-table .table th, #goals-table .table td {
-    border-top: 1px solid #66C89C;
-}
 </style>

@@ -2,7 +2,7 @@
     <div class="goals">
         <div class="overflow-auto">
         <!-- <div class="goal" v-for="(goal,index) in goals" :key="index"> -->
-            <b-table id="goals-table" :items="goals" :per-page="perPage" :current-page="currentPage" default striped hover fixed >
+            <b-table id="goals-table" :items="goals" :fields="fields" :per-page="perPage" :current-page="currentPage" default striped hover fixed>
                 <template #cell(startDate1)="data">
                     <span>{{ formatEmptyDate(data.value) }}</span>
                 </template>
@@ -25,10 +25,34 @@ export default {
     name: 'Goal',
     data () {
         return {
-            // slide: 0,
-            // sliding: null
             perPage: 2,
             currentPage: 1,
+            fields: [
+                { 
+                    key: 'goal',
+                    label: 'Goals'
+                },
+                {
+                    key: 'startDate1',
+                    label: 'Start Date'
+                },
+                {
+                    key: 'completionDate1',
+                    label: 'Completion Date'
+                },
+                {
+                    key: 'stepsToAchieve',
+                    label: 'Steps to Achieve'
+                },
+                { 
+                    key: 'whyIsThisGoalWorthwhile',
+                    label: 'Why is this goal worthwhile?'
+                },
+                { 
+                    key: 'notes',
+                    label: 'Notes'
+                }
+            ]
         }
     },
     props: ['goals', 'controls', 'indicators'],
@@ -48,29 +72,5 @@ export default {
 <style scoped>
 .goals {
     margin: 5% 3%;
-    border-left: 1px solid #66C89C;
-    border-right: 1px solid #66C89C;
-    border-bottom: 1px solid #66C89C;
 }
-
-/* .goals .goal .card {
-    border-radius: 8px;
-    max-width: 50rem;
-    height: 550px;
-    box-shadow: rgb(0 0 0 / 12%) 0px 1px 6px, rgb(0 0 0 / 12%) 0px 1px 4px;
-    transition: .15s all ease-in-out;
-}
-.goals .goal .card:hover {
-    transform: scale(1.05);
-}
-.goals .goal .card-body {
-    color: black;
-}
-.goals .card-deck {
-    justify-content: center;
-}
-.goals .goal .card-title {
-    border-bottom: 1px solid black;
-    padding-bottom: 0.5rem;
-} */
 </style>
