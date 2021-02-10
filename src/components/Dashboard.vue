@@ -4,11 +4,14 @@
       <div class="widget-container">
           <EllipseProgress :progress-data="progressPercentage" color-line="blue" empty-color-line="#FFFFFF" :legend-value="progressPercentage" legend-value-slot="%" legend-caption="PROGRESS"></EllipseProgress>
           <EllipseProgress :progress-data="progressPercentage" color-line="blue" empty-color-line="#FFFFFF" :legend-value="progressAction" :legend-value-slot="progressActionSlot" legend-caption="ACTIONS"></EllipseProgress>
-          <ActionButton text-one="UPDATE" text-two="GOALS"></ActionButton>
-        </div>
-        <div class="goals-container">
+          <ActionButton text-one="UPDATE" text-two="GOALS" path-route="goal"></ActionButton>
+      </div>
+      <div class="widget-container" v-on:click="showGoalDetails">
+        <ActionButton text-one="GOAL" text-two="DETAILS" path-route="false"></ActionButton>
+      </div>
+      <div class="goals-container" v-show="isActive">
           <Goal v-bind:goals="goals"></Goal>
-        </div>
+      </div>
     </div>
 </template>
 
@@ -31,7 +34,8 @@ export default {
       progressPercentage: 0,
       progressAction: 0,
       progressActionSlot: '',
-      name: ''
+      name: '',
+      isActive: false
     }
   },
   methods: {
@@ -49,6 +53,10 @@ export default {
     },
     getPercentage: (data, dataArr) => {
       return dataArr > 0 ? Math.round((data/dataArr) * 100) : 0;
+    },
+    showGoalDetails: function (event){
+      if (event) event.preventDefault();
+      this.isActive = !this.isActive;
     }
   },
   mounted: function() {
@@ -57,7 +65,6 @@ export default {
       .then(submissions => {
         console.log('submissions:' + submissions.data);
         this.submissions = submissions.data;
-        console.log('this.submissions: ' + JSON.stringify(this.submissions));
         this.name = submissions.data[0].data.firstName + ' ' + submissions.data[0].data.lastName;
         this.goals = submissions.data[0].data.editGrid;
         this.progressAction = this.calculateProgress(this.goals);
@@ -77,6 +84,7 @@ export default {
 .dashboard .widget-container {
   display: flex;
   justify-content: space-evenly;
+  margin-bottom: 5%;
 }
 .dashboard .fomio-container {
   margin: 5% 2% 5% 2%;
