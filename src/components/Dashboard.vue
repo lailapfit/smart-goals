@@ -3,8 +3,8 @@
       <h1>{{ name }}'s Annual Performance Objectives</h1>
       <div class="widget-container">
           <EllipseProgress :progress-data="progressPercentage" color-line="blue" empty-color-line="#FFFFFF" :legend-value="progressPercentage" legend-value-slot="%" legend-caption="PROGRESS"></EllipseProgress>
-          <EllipseProgress :progress-data="progressAction" color-line="blue" empty-color-line="#FFFFFF" :legend-value="progressAction" :legend-value-slot="progressActionSlot" legend-caption="ACTIONS"></EllipseProgress>
-        <ActionButton text-one="UPDATE" text-two="GOALS"></ActionButton>
+          <EllipseProgress :progress-data="progressPercentage" color-line="blue" empty-color-line="#FFFFFF" :legend-value="progressAction" :legend-value-slot="progressActionSlot" legend-caption="ACTIONS"></EllipseProgress>
+          <ActionButton text-one="UPDATE" text-two="GOALS"></ActionButton>
         </div>
         <div class="goals-container">
           <Goal v-bind:goals="goals"></Goal>
