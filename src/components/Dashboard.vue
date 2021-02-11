@@ -8,6 +8,7 @@
       </div>
       <div class="widget-container" v-on:click="showGoalDetails">
         <ActionButton text-one="GOAL" text-two="DETAILS" path-route="false"></ActionButton>
+        <line-graph :chartData="goals" :options="options"></line-graph>
       </div>
       <div class="goals-container" v-show="isActive">
           <Goal v-bind:goals="goals"></Goal>
@@ -19,13 +20,15 @@
 import EllipseProgress from '@/components/EllipseProgress.vue';
 import ActionButton from '@/components/CallToActionButton.vue';
 import Goal from '@/components/Goal.vue';
+import LineGraph from '@/components/Line.vue'
 
 export default {
   name: 'dashboard',
   components: {
     EllipseProgress,
     ActionButton,
-    Goal
+    Goal,
+    LineGraph
   },
   data () {
     return {
@@ -35,7 +38,11 @@ export default {
       progressAction: 0,
       progressActionSlot: '',
       name: '',
-      isActive: false
+      isActive: false,
+      options: {
+      responsive: true,
+      maintainAspectRatio: false
+    }
     }
   },
   methods: {
