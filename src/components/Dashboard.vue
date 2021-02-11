@@ -8,7 +8,9 @@
       </div>
       <div class="widget-container" v-on:click="showGoalDetails">
         <ActionButton text-one="GOAL" text-two="DETAILS" path-route="false"></ActionButton>
-        <line-graph :chartData="goals" :options="options"></line-graph>
+        <div class="widget-background">
+          <line-graph :chartdata="lineGraph" :options="options"></line-graph>
+        </div>
       </div>
       <div class="goals-container" v-show="isActive">
           <Goal v-bind:goals="goals"></Goal>
@@ -40,9 +42,47 @@ export default {
       name: '',
       isActive: false,
       options: {
-      responsive: true,
-      maintainAspectRatio: false
-    }
+        responsive: true,
+        lineTension: 1,
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              padding: 25,
+            }
+          }]
+        }
+      },
+      lineGraph: {
+        labels: ['M', 'N', 'X', 'P', 'O', 'Y', 'Z', 'L'],
+        datasets: [
+          { 
+            label: 'Number of Moons',
+            data: [0, 0, 1, 2, 67, 62, 27, 14],
+            backgroundColor: [
+              'rgba(54,73,93,.5)',
+              'rgba(54,73,93,.5)',
+              'rgba(54,73,93,.5)',
+              'rgba(54,73,93,.5)',
+              'rgba(54,73,93,.5)',
+              'rgba(54,73,93,.5)',
+              'rgba(54,73,93,.5)',
+              'rgba(54,73,93,.5)'
+            ],
+            borderColor: [
+              '#36495d',
+              '#36495d',
+              '#36495d',
+              '#36495d',
+              '#36495d',
+              '#36495d',
+              '#36495d',
+              '#36495d',
+            ],
+            borderWidth: 3
+          }
+        ]
+      }
     }
   },
   methods: {
@@ -64,10 +104,9 @@ export default {
     showGoalDetails: function (event){
       if (event) event.preventDefault();
       this.isActive = !this.isActive;
-    }
-  },
-  mounted: function() {
-    const baseURL = 'https://dqyymsublasmimb.form.io/smartgoals/submission';
+    },
+    getSubmission: function() {
+      const baseURL = 'https://dqyymsublasmimb.form.io/smartgoals/submission';
       this.$http.get(baseURL)
       .then(submissions => {
         console.log('submissions:' + submissions.data);
@@ -76,13 +115,18 @@ export default {
         this.goals = submissions.data[0].data.editGrid;
         this.progressAction = this.calculateProgress(this.goals);
         this.progressActionSlot = '/' + this.goals.length;
-        console.log('action: ' + this.progressAction);
         this.progressPercentage = this.getPercentage(this.progressAction, this.goals.length);
+        
+        console.log('action: ' + this.progressAction);
         console.log('progressPercentage: ' + this.progressPercentage);
       })
       .catch(error => {
         console.log('error in dashboard: ' + error);
       })
+    }
+  },
+  mounted: function() {
+    this.getSubmission();
   }
 }
 </script>
@@ -98,5 +142,11 @@ export default {
   border: 1px solid #FCC58E;
   border-radius: 2%;
   padding: 1%;
+}
+.wigdet-background {
+  background-color: #FCC58E;
+  padding: 3% 0 3% 0;
+  width: 30%;
+  border-radius: 5%;
 }
 </style>
