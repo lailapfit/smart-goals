@@ -2,19 +2,37 @@
 import { Line } from 'vue-chartjs'
 
 export default {
-  extends: Line,
-  props: {
-    chartdata: {
-      type: Object,
-      default: null
+    extends: Line,
+    props: ['chartData', 'chartLabels'],
+    data() {
+        return {
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: false,
+                            padding: 5,
+                        }
+                    }]
+                }
+            }
+        }
     },
-    options: {
-      type: Object,
-      default: null
+    mounted() {
+        this.renderChart({
+            labels: this.chartLabels,
+            datasets: [{
+                label: 'downloads',
+                borderColor: '#249EBF',
+                pointBackgroundColor: 'white',
+                borderWidth: 1,
+                pointBorderColor: '#249EBF',
+                backgroundColor: '#249EBF',
+                data: this.chartData
+            }]
+        }, this.options)
     }
-  },
-  mounted () {
-    this.renderChart(this.chartdata, this.options)
-  }
 }
 </script>

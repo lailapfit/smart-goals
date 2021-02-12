@@ -9,7 +9,7 @@
       <div class="widget-container" v-on:click="showGoalDetails">
         <ActionButton text-one="GOAL" text-two="DETAILS" path-route="false"></ActionButton>
         <div class="widget-background">
-          <line-graph :chartdata="lineGraph" :options="options"></line-graph>
+          <line-graph v-if="loaded" :chart-data="stepGoals" :chart-labels="labels"></line-graph>
         </div>
       </div>
       <div class="goals-container" v-show="isActive">
@@ -22,7 +22,7 @@
 import EllipseProgress from '@/components/EllipseProgress.vue';
 import ActionButton from '@/components/CallToActionButton.vue';
 import Goal from '@/components/Goal.vue';
-import LineGraph from '@/components/Line.vue'
+import LineGraph from '@/components/Line.vue';
 
 export default {
   name: 'dashboard',
@@ -41,48 +41,9 @@ export default {
       progressActionSlot: '',
       name: '',
       isActive: false,
-      options: {
-        responsive: true,
-        lineTension: 1,
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true,
-              padding: 25,
-            }
-          }]
-        }
-      },
-      lineGraph: {
-        labels: ['M', 'N', 'X', 'P', 'O', 'Y', 'Z', 'L'],
-        datasets: [
-          { 
-            label: 'Number of Moons',
-            data: [0, 0, 1, 2, 67, 62, 27, 14],
-            backgroundColor: [
-              'rgba(54,73,93,.5)',
-              'rgba(54,73,93,.5)',
-              'rgba(54,73,93,.5)',
-              'rgba(54,73,93,.5)',
-              'rgba(54,73,93,.5)',
-              'rgba(54,73,93,.5)',
-              'rgba(54,73,93,.5)',
-              'rgba(54,73,93,.5)'
-            ],
-            borderColor: [
-              '#36495d',
-              '#36495d',
-              '#36495d',
-              '#36495d',
-              '#36495d',
-              '#36495d',
-              '#36495d',
-              '#36495d',
-            ],
-            borderWidth: 3
-          }
-        ]
-      }
+      labels: [],
+      stepGoals: [],
+      loaded: false
     }
   },
   methods: {
@@ -106,26 +67,35 @@ export default {
       this.isActive = !this.isActive;
     },
     getSubmission: function() {
+      this.loaded = false;
       const baseURL = 'https://dqyymsublasmimb.form.io/smartgoals/submission';
       this.$http.get(baseURL)
       .then(submissions => {
         console.log('submissions:' + submissions.data);
+        //widget progress
         this.submissions = submissions.data;
         this.name = submissions.data[0].data.firstName + ' ' + submissions.data[0].data.lastName;
         this.goals = submissions.data[0].data.editGrid;
+        
         this.progressAction = this.calculateProgress(this.goals);
         this.progressActionSlot = '/' + this.goals.length;
         this.progressPercentage = this.getPercentage(this.progressAction, this.goals.length);
-        
+
         console.log('action: ' + this.progressAction);
         console.log('progressPercentage: ' + this.progressPercentage);
+
+        //widget line graph
+        console.log('set widget line graph data')
+        this.labels = this.goals.map(goal => goal.goalTitle);
+        this.stepGoals = this.goals.map(goal => goal.dataGridStepsToAchieve.length);
+        this.loaded = true
       })
       .catch(error => {
         console.log('error in dashboard: ' + error);
       })
     }
   },
-  mounted: function() {
+  async mounted() {
     this.getSubmission();
   }
 }
@@ -143,10 +113,11 @@ export default {
   border-radius: 2%;
   padding: 1%;
 }
-.wigdet-background {
+.widget-background {
   background-color: #FCC58E;
-  padding: 3% 0 3% 0;
-  width: 30%;
-  border-radius: 5%;
+  padding-bottom: 5px;
+  padding-left: 8px;
+  width: 60%;
+  border-radius: 20px;
 }
 </style>
