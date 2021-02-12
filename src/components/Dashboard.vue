@@ -9,7 +9,7 @@
       <div class="widget-container" v-on:click="showGoalDetails">
         <ActionButton text-one="GOAL" text-two="DETAILS" path-route="false"></ActionButton>
         <div class="widget-background">
-          <line-graph v-if="loaded" :chart-data="stepGoals" :chart-labels="labels"></line-graph>
+          <line-graph v-if="loaded" :chart-data="lineGraph" :chart-labels="labels"></line-graph>
         </div>
       </div>
       <div class="goals-container" v-show="isActive">
@@ -42,7 +42,10 @@ export default {
       name: '',
       isActive: false,
       labels: [],
-      stepGoals: [],
+      lineGraph: {
+          stepGoals: [],
+          complete: []
+        },
       loaded: false
     }
   },
@@ -87,7 +90,8 @@ export default {
         //widget line graph
         console.log('set widget line graph data')
         this.labels = this.goals.map(goal => goal.goalTitle);
-        this.stepGoals = this.goals.map(goal => goal.dataGridStepsToAchieve.length);
+        this.lineGraph.stepGoals = this.goals.map(goal => goal.dataGridStepsToAchieve.length);
+        this.lineGraph.complete = [3, 2, 2, 1, 0, 0]
         this.loaded = true
       })
       .catch(error => {

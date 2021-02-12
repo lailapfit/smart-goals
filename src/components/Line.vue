@@ -23,15 +23,26 @@ export default {
     mounted() {
         this.renderChart({
             labels: this.chartLabels,
-            datasets: [{
-                label: 'downloads',
-                borderColor: '#249EBF',
-                pointBackgroundColor: 'white',
-                borderWidth: 1,
-                pointBorderColor: '#249EBF',
-                backgroundColor: '#249EBF',
-                data: this.chartData
-            }]
+            datasets: [
+                {
+                    label: 'Step Action Goals',
+                    borderColor: '#249EBF',
+                    pointBackgroundColor: 'white',
+                    borderWidth: 3,
+                    pointBorderColor: '#249EBF',
+                    backgroundColor: 'transparent',
+                    data: this.chartData.stepGoals
+                },
+                {
+                    label: 'Complete Goals',
+                    borderColor: 'red',
+                    pointBackgroundColor: 'white',
+                    borderWidth: 3,
+                    pointBorderColor: 'red',
+                    backgroundColor: 'transparent',
+                    data: this.chartData.complete
+                }
+            ]
         }, this.options)
     }
 }
