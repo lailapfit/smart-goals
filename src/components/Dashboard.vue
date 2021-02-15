@@ -54,12 +54,20 @@ export default {
       let progress = 0;
       if (smartGoals.length > 0) {
         for(let goal of smartGoals) {
-          if (goal.completionDate1 != '00/00/0000') {
-            progress++;
-          }
+          goal.completionDate1 != '00/00/0000' ? progress++ : progress;
         }
       }
       console.log('progress: ' + progress);
+      return progress;
+    },
+    calculateStepActionProgress: (stepActions) => {
+      let progress = 0;
+      if (stepActions.length > 0) {
+        for(let goal of stepActions) {
+          goal.stepStatus !== 'complete' ? progress++ : progress;
+        }
+      }
+      console.log('step action progress: ' + progress);
       return progress;
     },
     getPercentage: (data, dataArr) => {
@@ -68,6 +76,11 @@ export default {
     showGoalDetails: function (event){
       if (event) event.preventDefault();
       this.isActive = !this.isActive;
+    },
+    getCompletedStepGoals: function (goals) {
+      return goals.map(stepGoals => {
+        return this.calculateStepActionProgress(stepGoals.dataGridStepsToAchieve)
+      })
     },
     getSubmission: function() {
       this.loaded = false;
@@ -91,7 +104,7 @@ export default {
         console.log('set widget line graph data')
         this.labels = this.goals.map(goal => goal.goalTitle);
         this.lineGraph.stepGoals = this.goals.map(goal => goal.dataGridStepsToAchieve.length);
-        this.lineGraph.complete = [3, 2, 2, 1, 0, 0]
+        this.lineGraph.complete = this.getCompletedStepGoals(this.goals);
         this.loaded = true
       })
       .catch(error => {

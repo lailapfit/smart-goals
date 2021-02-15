@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">DashBoard</router-link> | 
-      <router-link to="/goal">Goals</router-link>
+      <router-link to="/">Dashboard</router-link> | 
+      <router-link to="/goal">Update Goals</router-link>
     </div>
     <router-view />
   </div>
@@ -16,6 +16,10 @@
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+#nav {
+  text-align: right;
+  margin-right: 3%;
 }
 .padding-top-sm {
   padding-top: 10px;
