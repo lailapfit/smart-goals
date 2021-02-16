@@ -2,7 +2,7 @@
     <div class="dashboard">
       <div class="introduction-container">
         <h1>Hi <span class="green-highlight">{{ name }}</span> &#x1F44B;</h1>
-        <h3>Welcome to your <span class="orange-highlight">2021 Annual Personal Objectives</span> dashboard &#x1F64C;</h3>
+        <h3>Welcome to your <span class="orange-highlight">{{ year }} Annual Personal Objectives</span> dashboard &#x1F64C;</h3>
       </div>
       <div class="widget-container">
           <EllipseProgress :progress-data="progressPercentage" color-line="blue" empty-color-line="#FFFFFF" :legend-value="progressPercentage" legend-value-slot="%" legend-caption="PROGRESS"></EllipseProgress>
@@ -49,7 +49,8 @@ export default {
           stepGoals: [],
           complete: []
         },
-      loaded: false
+      loaded: false,
+      year: ''
     }
   },
   methods: {
@@ -94,6 +95,7 @@ export default {
         //widget progress
         this.submissions = submissions.data;
         this.name = submissions.data[0].data.firstName + ' ' + submissions.data[0].data.lastName;
+        this.year = submissions.data[0].data.goalTypeAnnualYear;
         this.goals = submissions.data[0].data.editGrid;
         
         this.progressAction = this.calculateProgress(this.goals);
@@ -174,7 +176,7 @@ export default {
   border: 2px solid#FCC58E;
   background-color: #FCC58E;
   border-right-color: transparent;
-  width: 105%;
+  width: 103%;
   height: 0.5em;
   transform: rotate(1deg);
   opacity: 0.5;
