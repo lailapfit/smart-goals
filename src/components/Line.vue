@@ -35,10 +35,10 @@ export default {
                 },
                 {
                     label: 'Complete Goals',
-                    borderColor: 'red',
+                    borderColor: '#f90a06',
                     pointBackgroundColor: 'white',
                     borderWidth: 3,
-                    pointBorderColor: 'red',
+                    pointBorderColor: '#f90a06',
                     backgroundColor: 'transparent',
                     data: this.chartData.complete
                 }

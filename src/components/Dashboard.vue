@@ -1,6 +1,9 @@
 <template>
     <div class="dashboard">
-      <h1>{{ name }}'s Annual Performance Objectives</h1>
+      <div class="introduction-container">
+        <h1>Hi <span class="green-highlight">{{ name }}</span> &#x1F44B;</h1>
+        <h3>Welcome to your <span class="orange-highlight">2021 Annual Personal Objectives</span> dashboard &#x1F64C;</h3>
+      </div>
       <div class="widget-container">
           <EllipseProgress :progress-data="progressPercentage" color-line="blue" empty-color-line="#FFFFFF" :legend-value="progressPercentage" legend-value-slot="%" legend-caption="PROGRESS"></EllipseProgress>
           <EllipseProgress :progress-data="progressPercentage" color-line="blue" empty-color-line="#FFFFFF" :legend-value="progressAction" :legend-value-slot="progressActionSlot" legend-caption="ACTIONS"></EllipseProgress>
@@ -64,7 +67,7 @@ export default {
       let progress = 0;
       if (stepActions.length > 0) {
         for(let goal of stepActions) {
-          goal.stepStatus !== 'complete' ? progress++ : progress;
+          goal.stepStatus === 'complete' ? progress++ : progress;
         }
       }
       console.log('step action progress: ' + progress);
@@ -136,5 +139,46 @@ export default {
   padding-left: 8px;
   width: 60%;
   border-radius: 20px;
+}
+.introduction-container {
+  text-align: left;
+  margin: 3% 3% 3% 2%;
+  padding-left: 1%;
+  border-left: 1px solid black;
+}
+.green-highlight, .orange-highlight {
+  position: relative;
+}
+.green-highlight:before {
+  content: "";
+  z-index: -1;
+  top: 0.7em;
+  right: -6px;
+  position: absolute;
+  border: 2px solid #42b983;
+  background-color: #42b983;
+  border-right-color: transparent;
+  width: 105%;
+  height: 0.5em;
+  transform: rotate(1deg);
+  opacity: 0.5;
+  border-radius: 0.25em;
+  font-weight: 600;
+}
+.orange-highlight:before {
+  content: "";
+  z-index: -1;
+  top: 0.7em;
+  right: -6px;
+  position: absolute;
+  border: 2px solid#FCC58E;
+  background-color: #FCC58E;
+  border-right-color: transparent;
+  width: 105%;
+  height: 0.5em;
+  transform: rotate(1deg);
+  opacity: 0.5;
+  border-radius: 0.25em;
+  font-weight: 600;
 }
 </style>
