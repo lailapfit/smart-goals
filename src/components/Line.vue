@@ -26,10 +26,10 @@ export default {
             datasets: [
                 {
                     label: 'Step Action Goals',
-                    borderColor: '#249EBF',
+                    borderColor: '#007bff',
                     pointBackgroundColor: 'white',
                     borderWidth: 3,
-                    pointBorderColor: '#249EBF',
+                    pointBorderColor: '#007bff',
                     backgroundColor: 'transparent',
                     data: this.chartData.stepGoals
                 },

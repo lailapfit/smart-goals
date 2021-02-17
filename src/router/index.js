@@ -14,7 +14,7 @@ export default new Router({
             path: '/goal',
             name: 'Goal',
             component: () =>
-                import ('../components/SmartGoalForm.vue')
+                import ('../views/SmartGoalForm.vue')
         }
     ]
 })

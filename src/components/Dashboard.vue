@@ -5,8 +5,8 @@
         <h3>Welcome to your <span class="orange-highlight">{{ year }} Annual Personal Objectives</span> dashboard &#x1F64C;</h3>
       </div>
       <div class="widget-container">
-          <EllipseProgress :progress-data="progressPercentage" color-line="blue" empty-color-line="#FFFFFF" :legend-value="progressPercentage" legend-value-slot="%" legend-caption="PROGRESS"></EllipseProgress>
-          <EllipseProgress :progress-data="progressPercentage" color-line="blue" empty-color-line="#FFFFFF" :legend-value="progressAction" :legend-value-slot="progressActionSlot" legend-caption="ACTIONS"></EllipseProgress>
+          <EllipseProgress :progress-data="progressPercentage" color-line="#007bff" empty-color-line="#FFFFFF" :legend-value="progressPercentage" legend-value-slot="%" legend-caption="PROGRESS"></EllipseProgress>
+          <EllipseProgress :progress-data="progressPercentage" color-line="#007bff" empty-color-line="#FFFFFF" :legend-value="progressAction" :legend-value-slot="progressActionSlot" legend-caption="ACTIONS"></EllipseProgress>
           <ActionButton text-one="UPDATE" text-two="GOALS" path-route="goal"></ActionButton>
       </div>
       <div class="widget-container" v-on:click="showGoalDetails">

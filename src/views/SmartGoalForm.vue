@@ -8,11 +8,11 @@
 import { Form } from "vue-formio";
 
 export default {
-    name: "smartGoalsForm",
-    components: {
-        formio: Form
-    },
-    data: function() {
+  name: "smartGoalsForm",
+  components: {
+    formio: Form
+  },
+  data: function() {
     return {
       formUrl: "https://dqyymsublasmimb.form.io/smartgoals"
     }
