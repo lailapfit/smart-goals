@@ -16,4 +16,7 @@ Vue.use(BootstrapVue)
 new Vue({
     router,
     render: h => h(App),
+    data: {
+        submissions: []
+    }
 }).$mount('#app')

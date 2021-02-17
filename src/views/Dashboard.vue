@@ -7,7 +7,7 @@
       <div class="widget-container">
           <EllipseProgress :progress-data="progressPercentage" color-line="#007bff" empty-color-line="#FFFFFF" :legend-value="progressPercentage" legend-value-slot="%" legend-caption="PROGRESS"></EllipseProgress>
           <EllipseProgress :progress-data="progressPercentage" color-line="#007bff" empty-color-line="#FFFFFF" :legend-value="progressAction" :legend-value-slot="progressActionSlot" legend-caption="ACTIONS"></EllipseProgress>
-          <ActionButton text-one="UPDATE" text-two="GOALS" path-route="goal"></ActionButton>
+          <ActionButton text-one="UPDATE" text-two="GOALS" path-route="new-goal"></ActionButton>
       </div>
       <div class="widget-container" v-on:click="showGoalDetails">
         <ActionButton text-one="GOAL" text-two="DETAILS" path-route="false"></ActionButton>
@@ -92,33 +92,53 @@ export default {
       this.$http.get(baseURL)
       .then(submissions => {
         console.log('submissions:' + submissions.data);
-        //widget progress
-        this.submissions = submissions.data;
-        this.name = submissions.data[0].data.firstName + ' ' + submissions.data[0].data.lastName;
-        this.year = submissions.data[0].data.goalTypeAnnualYear;
-        this.goals = submissions.data[0].data.editGrid;
-        
-        this.progressAction = this.calculateProgress(this.goals);
-        this.progressActionSlot = '/' + this.goals.length;
-        this.progressPercentage = this.getPercentage(this.progressAction, this.goals.length);
-
-        console.log('action: ' + this.progressAction);
-        console.log('progressPercentage: ' + this.progressPercentage);
-
-        //widget line graph
-        console.log('set widget line graph data')
-        this.labels = this.goals.map(goal => goal.goalTitle);
-        this.lineGraph.stepGoals = this.goals.map(goal => goal.dataGridStepsToAchieve.length);
-        this.lineGraph.complete = this.getCompletedStepGoals(this.goals);
-        this.loaded = true
+        //root submission
+        this.$root.submissions = submissions.data;
+        console.log('root: ' + this.$root.submissions);
+        this.setSubmission(submissions.data);
+        this.loaded = true;
       })
       .catch(error => {
         console.log('error in dashboard: ' + error);
       })
+    },
+    setSubmission: function(submission) {
+      this.loaded = false;
+      try {
+        //widget progress
+        this.submissions = submission;
+        this.name = submission[0].data.firstName + ' ' + submission[0].data.lastName;
+        this.year = submission[0].data.goalTypeAnnualYear;
+        this.goals = submission[0].data.editGrid;
+
+        this.progressAction = this.calculateProgress(this.goals);
+        this.progressActionSlot = '/' + this.goals.length;
+        this.progressPercentage = this.getPercentage(this.progressAction, this.goals.length);
+        
+        console.log('action: ' + this.progressAction);
+        console.log('progressPercentage: ' + this.progressPercentage);
+
+        //widget line graph
+        console.log('set widget line graph data');
+        this.labels = this.goals.map(goal => goal.goalTitle);
+        this.lineGraph.stepGoals = this.goals.map(goal => goal.dataGridStepsToAchieve.length);
+        this.lineGraph.complete = this.getCompletedStepGoals(this.goals);
+        this.loaded = true;
+      } catch (e) {
+        console.log('error in dashboard set submission: ' + e);
+      }
     }
   },
   async mounted() {
-    this.getSubmission();
+    if (this.$root.submissions.length > 0) {
+      console.log('cached data');
+      this.loaded = false;
+      this.setSubmission(this.$root.submissions);
+      this.loaded = true;
+    } else {
+      console.log('non-cached data');
+      this.getSubmission();
+    }
   }
 }
 </script>
