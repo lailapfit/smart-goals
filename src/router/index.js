@@ -12,9 +12,15 @@ export default new Router({
         },
         {
             path: '/new-goal',
-            name: 'Goal',
+            name: 'new-goal',
             component: () =>
                 import ('../views/SmartGoalForm.vue')
+        },
+        {
+            path: '/goals/:id',
+            name: 'goals',
+            component: () =>
+                import ('../views/UpdateGoal.vue')
         }
     ]
 })

@@ -7,7 +7,7 @@
       <div class="widget-container">
           <EllipseProgress :progress-data="progressPercentage" color-line="#007bff" empty-color-line="#FFFFFF" :legend-value="progressPercentage" legend-value-slot="%" legend-caption="PROGRESS"></EllipseProgress>
           <EllipseProgress :progress-data="progressPercentage" color-line="#007bff" empty-color-line="#FFFFFF" :legend-value="progressAction" :legend-value-slot="progressActionSlot" legend-caption="ACTIONS"></EllipseProgress>
-          <ActionButton text-one="UPDATE" text-two="GOALS" path-route="new-goal"></ActionButton>
+          <ActionButton text-one="UPDATE" text-two="GOALS" :path-route="goalRoute"></ActionButton>
       </div>
       <div class="widget-container" v-on:click="showGoalDetails">
         <ActionButton text-one="GOAL" text-two="DETAILS" path-route="false"></ActionButton>
@@ -50,7 +50,8 @@ export default {
           complete: []
         },
       loaded: false,
-      year: ''
+      year: '',
+      goalRoute: ''
     }
   },
   methods: {
@@ -107,6 +108,7 @@ export default {
         this.year = submission[0].data.goalTypeAnnualYear;
         this.goals = submission[0].data.editGrid;
         this.progressActionSlot = '/' + this.goals.length;
+        this.goalRoute = 'goals/' + submission[0]._id;
 
         if (this.$root.progressAction === 0) {
           this.$root.progressAction = this.calculateProgress(this.goals);

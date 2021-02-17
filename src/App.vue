@@ -2,7 +2,7 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Dashboard</router-link> | 
-      <router-link to="/new-goal">Update Goals</router-link>
+      <router-link to="/new-goal">Add New Goals</router-link>
     </div>
     <router-view />
   </div>
