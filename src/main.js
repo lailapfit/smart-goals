@@ -17,6 +17,13 @@ new Vue({
     router,
     render: h => h(App),
     data: {
-        submissions: []
+        submissions: [],
+        progressPercentage: 0,
+        progressAction: 0,
+        labels: [],
+        lineGraph: {
+            stepGoals: [],
+            complete: []
+        }
     }
 }).$mount('#app')

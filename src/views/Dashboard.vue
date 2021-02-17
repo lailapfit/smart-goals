@@ -87,22 +87,18 @@ export default {
       })
     },
     getSubmission: function() {
-      this.loaded = false;
       const baseURL = 'https://dqyymsublasmimb.form.io/smartgoals/submission';
       this.$http.get(baseURL)
       .then(submissions => {
         console.log('submissions:' + submissions.data);
-        //root submission
         this.$root.submissions = submissions.data;
-        console.log('root: ' + this.$root.submissions);
-        this.setSubmission(submissions.data);
-        this.loaded = true;
+        this.setPropBySubmission(submissions.data);
       })
       .catch(error => {
         console.log('error in dashboard: ' + error);
       })
     },
-    setSubmission: function(submission) {
+    setPropBySubmission: function(submission) {
       this.loaded = false;
       try {
         //widget progress
@@ -110,19 +106,36 @@ export default {
         this.name = submission[0].data.firstName + ' ' + submission[0].data.lastName;
         this.year = submission[0].data.goalTypeAnnualYear;
         this.goals = submission[0].data.editGrid;
-
-        this.progressAction = this.calculateProgress(this.goals);
         this.progressActionSlot = '/' + this.goals.length;
-        this.progressPercentage = this.getPercentage(this.progressAction, this.goals.length);
+
+        if (this.$root.progressAction === 0) {
+          this.$root.progressAction = this.calculateProgress(this.goals);
+        }
+        this.progressAction = this.$root.progressAction;
+
+        if (this.$root.progressPercentage === 0){
+          this.$root.progressPercentage = this.getPercentage(this.progressAction, this.goals.length);
+        }
+        this.progressPercentage = this.$root.progressPercentage;
         
         console.log('action: ' + this.progressAction);
         console.log('progressPercentage: ' + this.progressPercentage);
 
         //widget line graph
-        console.log('set widget line graph data');
-        this.labels = this.goals.map(goal => goal.goalTitle);
-        this.lineGraph.stepGoals = this.goals.map(goal => goal.dataGridStepsToAchieve.length);
-        this.lineGraph.complete = this.getCompletedStepGoals(this.goals);
+        if (this.$root.labels.length === 0) {
+          this.$root.labels = this.goals.map(goal => goal.goalTitle);
+        }
+        this.labels = this.$root.labels;
+        
+        if (this.$root.lineGraph.stepGoals.length === 0) {
+          this.$root.lineGraph.stepGoals = this.goals.map(goal => goal.dataGridStepsToAchieve.length);
+        }
+        this.lineGraph.stepGoals = this.$root.lineGraph.stepGoals;
+
+        if (this.$root.lineGraph.complete.length === 0) {
+          this.$root.lineGraph.complete = this.getCompletedStepGoals(this.goals);
+        }
+        this.lineGraph.complete = this.$root.lineGraph.complete;
         this.loaded = true;
       } catch (e) {
         console.log('error in dashboard set submission: ' + e);
@@ -132,9 +145,7 @@ export default {
   async mounted() {
     if (this.$root.submissions.length > 0) {
       console.log('cached data');
-      this.loaded = false;
-      this.setSubmission(this.$root.submissions);
-      this.loaded = true;
+      this.setPropBySubmission(this.$root.submissions);
     } else {
       console.log('non-cached data');
       this.getSubmission();
