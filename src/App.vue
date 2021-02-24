@@ -30,4 +30,7 @@ ol {
 #goals-table thead {
     background-color:  #66C89C;
 }
+input.formio-select-autocomplete-input {
+    display: none;
+}
 </style>

@@ -62,7 +62,6 @@ export default {
           goal.completionDate1 != '00/00/0000' ? progress++ : progress;
         }
       }
-      console.log('progress: ' + progress);
       return progress;
     },
     calculateStepActionProgress: (stepActions) => {
@@ -72,7 +71,6 @@ export default {
           goal.stepStatus === 'complete' ? progress++ : progress;
         }
       }
-      console.log('step action progress: ' + progress);
       return progress;
     },
     getPercentage: (data, dataArr) => {
